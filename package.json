@@ -1,0 +1,50 @@
+{
+  "name": "quizzes-app",
+  "version": "1.0.0",
+  "description": "A web application built to help students practice quizzes before their tests.",
+  "main": "main.js",
+  "scripts": {
+    "start": "node --watch main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexzGut/nodejs-quizzes-app.git"
+  },
+  "keywords": [
+    "Node.js",
+    "Express.js",
+    "MongoDB",
+    "Mongoose",
+    "EJS templates",
+    "Quiz application",
+    "User authentication",
+    "Real-time scoring",
+    "Quiz creation",
+    "Educational tool",
+    "Responsive design",
+    "Bootstrap",
+    "JavaScript",
+    "Full-stack development",
+    "Web application",
+    "Dynamic content",
+    "Interactive learning",
+    "REST API",
+    "MVC architecture",
+    "Student practice tool"
+  ],
+  "author": "Alexander Gutierrez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexzGut/nodejs-quizzes-app/issues"
+  },
+  "homepage": "https://github.com/AlexzGut/nodejs-quizzes-app#readme",
+  "devDependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-ejs-layouts": "^2.5.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}
