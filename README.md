@@ -9,11 +9,11 @@ A Node.js application designed to help students practice quizzes before tests. T
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
 - [Usage](#usage)
-- [License](https://github.com/AlexzGut/nodejs-quizzes-app/blob/main/LICENSE)
+- [License](#license)
 
 ## Background
 
-As a **Computer Programming student** and **tutor at Lambton College**, I noticed a growing need for a tool to help students practice quizzes before their tests. While working as a tutor, I realized that I wanted to expand my leadership and collaborative skills outside the tutoring center, which inspired me to create the **NodeJS Quizzes App**.
+As a **Computer Programming student** and **tutor at Lambton College**, I noticed a growing need for a tool to help students practice quizzes before their tests. While working as a tutor, I realized that I wanted to expand my leadership and collaborative skills outside the tutoring center, which inspired me to create the **Quizzes App** using Node.js.
 
 This app not only addresses the need for quiz practice but also showcases my abilities in **Full Stack development**, including building secure user authentication, managing dynamic content, and handling data efficiently. I developed this project with the goal of offering students a practical resource while also furthering my own professional growth.
 
