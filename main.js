@@ -3,9 +3,11 @@ const express = require("express")
 const layouts = require("express-ejs-layouts")
 const router = require("./routes/index")
 const path = require("path")
+const db = require("./config/db")
 
 port = process.env.PORT || 3000
 
+db()
 const app = express()
 
 app.set("view engine", "ejs")
