@@ -1,4 +1,38 @@
-User View
+<section>
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Date created</th>
+                <th>Last updated on</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% 
+                const options = {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                };
+            
+                users.forEach((user) => { %>
+                    <tr>
+                        <td><%= user.username %></td>
+                        <td><%= user.email %></td>
+                        <td><%= user.createdAt.toLocaleDateString("en-US", options) %></td>
+                        <td><%= user.updatedAt.toLocaleDateString("en-US", options) %></td>
+                        <td>
+                            <a href="<%=`/users/${user._id}`%>">Edit</a>
+                            <a href="<%=`/users/${user._id}?_method=DELETE`%>">Delete</a>
+                        </td>
+                    </tr>
+            <%})%>
+        </tbody>
+    </table>
+</section>
 
 <%- contentFor('title') %>
 User

@@ -1,0 +1,16 @@
+<div>
+    <form action="/users/login" method="POST">
+        <h2>Sign Up</h2>
+
+        <label for="email">Email address</label>
+        <input type="email" name="email" id="email" placeholder="Email address" required>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Password" required>
+
+        <button type="submit">Log In</button>
+    </form>
+        <a href="/users/signup">Sign Up</a>
+</div>
+<%- contentFor('title') %>
+Sign Up

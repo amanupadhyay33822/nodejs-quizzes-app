@@ -1,0 +1,23 @@
+<div>
+    <form action="<%=`/users/${user._id}?_method=PUT`%>" method="POST">
+        <h2>Update User</h2>
+
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" placeholder="Username" value="<%=user.username%>" required>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Password">
+
+        <label for="confirm_password">Confirm Password</label>
+        <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm password">
+
+        <label for="email">Email address</label>
+        <input type="email" name="email" id="email" placeholder="Email address" value="<%=user.email%>" required>
+
+
+        <button type="submit">Update</button>
+    </form>
+        <a href="/users">Cancel</a>
+</div>
+<%- contentFor('title') %>
+Update
