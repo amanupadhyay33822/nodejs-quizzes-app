@@ -52,8 +52,7 @@ module.exports = {
     update: async (req, res, next) => {
         const userId = req.params.id;
         const { body } = req;
-        console.log(body);
-        
+       
         try {;
             await User.findByIdAndUpdate(userId, { $set: body })
             // necessary for the pre hook "save" to be triggered
@@ -84,11 +83,7 @@ module.exports = {
     authenticate: async (req, res, next) => {
         try {
             const user = await User.findOne({ email: req.body.email });
-            console.log(req.body.email);
-            console.log(req.body.password);
-            
-            console.log(user);
-            
+                        
             if (user) {
                 try {
                     const passwordMatch = await user.passwordComparison(req.body.password);
