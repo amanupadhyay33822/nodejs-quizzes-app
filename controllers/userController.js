@@ -1,4 +1,5 @@
-const User = require("../models/User")
+const User = require("../models/User");
+const passport = require("passport");
 
 module.exports = {
     // Views
@@ -15,17 +16,35 @@ module.exports = {
         res.render("users/login");
     },
 
+    // Actions
+    logout: (req, res, next) => {
+        // removes the user property from the session.
+        req.logout((error) => {
+            if (error) {
+                console.log(`Error logging out the user ${error.message}`);
+                next(error);
+            } else {
+                req.flash("success", "You have been logged out!");
+                res.locals.redirect = "/";
+                next();
+            }
+        });
+    },
+
     // CRUD
-    create: async (req, res, next) => {
+    create: (req, res, next) => {
         const { body } = req;
-        try {
-            await User.create(body);
-            res.locals.redirect = "/users";
-            next();
-        } catch(error) {
-            console.log(`Error creating user ${error.message}`);
-            next(error);
-        }
+            const newUser = new User({ username: body.username, email: body.email });
+            User.register(newUser, body.password, (error, user) => {
+                if (user) {
+                    req.flash("success", `${user.username}'s account created successfully!`);
+                    res.locals.redirect = "/users";
+                } else {
+                    req.flash("error", `Failed to create user account because: ${error.message}.`);
+                    res.locals.redirect = "/users/signup";
+                }
+                next();
+            });
     },
 
     getUser: async (req, res, next) => {
@@ -35,7 +54,7 @@ module.exports = {
             next();
         } catch(error) {
             console.log(`Error retreiving the user ${error.message}`);
-            next(error)
+            next(error);
         }
     },
 
@@ -45,7 +64,7 @@ module.exports = {
             next();
         } catch(error) {
             console.log(`Error in getAllUsers ${error.message}`);
-            next(error)
+            next(error);
         }
     },
 
@@ -55,10 +74,6 @@ module.exports = {
        
         try {;
             await User.findByIdAndUpdate(userId, { $set: body })
-            // necessary for the pre hook "save" to be triggered
-            const userUpdated = await User.findById(userId);
-            userUpdated.save();
-
             res.locals.redirect = "/users";
             next();
         } catch(error) {
@@ -80,32 +95,12 @@ module.exports = {
     },
 
     // user authentication -Log In
-    authenticate: async (req, res, next) => {
-        try {
-            const user = await User.findOne({ email: req.body.email });
-                        
-            if (user) {
-                try {
-                    const passwordMatch = await user.passwordComparison(req.body.password);
-                    if (passwordMatch) {
-                        res.locals.redirect = `/`;
-                        res.locals.user = user;
-                    } else {
-                        res.locals.redirect = "/users/login";
-                    }
-                    next();
-                } catch (error) {
-
-                }
-            } else {
-                res.locals.redirect = "/users/login";
-                next();
-            }
-        } catch(error) {
-            console.log(`Error logging in user: ${error.message}`);
-            next(error);
-        }
-    },
+    authenticate: passport.authenticate("local", {
+        failureRedirect: "/users/login",
+        failureFlash: "Failed to login.",
+        successRedirect: "/",
+        successFlash: "Logged in!"
+    }),
 
     // redirect
     redirectView: (req, res, next) => {

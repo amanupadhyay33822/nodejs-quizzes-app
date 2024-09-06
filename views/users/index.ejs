@@ -1,4 +1,9 @@
 <section>
+    <% if (flashMessages) { %>
+        <% if (flashMessages.success) { %>
+            <div class="flash success"><%= flashMessages.success %></div>
+        <%}%>
+    <%}%>
     <table>
         <thead>
             <tr>

@@ -1,4 +1,9 @@
 <div>
+    <% if (flashMessages) { %>
+        <% if (flashMessages.error) { %>
+            <div class="flash success"><%= flashMessages.error %></div>
+        <%}%>
+    <%}%>
     <form action="/users" method="POST">
         <h2>Sign Up</h2>
 
