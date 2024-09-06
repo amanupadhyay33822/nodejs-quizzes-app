@@ -1,18 +1,25 @@
-const mongoose = require("mongoose")
-const {model, Schema} = mongoose
-const bcrypt = require("bcrypt")
+const mongoose = require("mongoose");
+const { model, Schema } = mongoose;
+const bcrypt = require("bcrypt");
 
-const UserSchema = new Schema({
-    username: { type: String, trim: true, required: true},
-    email: { type: String, trim: true, unique: true, required: true},
-    password: { type: String, required: true}
-    },
+const userSchema = new Schema({
+    username: { type: String, trim: true, required: true },
+    email: { type: String, trim: true, unique: true, required: true },
+    password: { type: String, required: true },
+    quizzes: [{
+        quiz: { type: Schema.Types.ObjectId, ref:"Quiz" },
+        score: { type: Number, default: 0 },
+        questionIndex: { type: Number, default: 0 },
+        attemptDate: { type: Date, default: Date.now }
+    }]
+},
     { 
         timestamps: true
-    })
+    }
+);
 
 // mongoose hooks
-UserSchema.pre("save", async function(next) {
+userSchema.pre("save", async function(next) {
     const user = this;
 
     try {
@@ -25,9 +32,9 @@ UserSchema.pre("save", async function(next) {
 });
 
 // Instance methods
-UserSchema.methods.passwordComparison = function(password) {
+userSchema.methods.passwordComparison = function(password) {
     const user = this;
     return bcrypt.compare(password, user.password);
 };
 
-module.exports = model("User", UserSchema);
+module.exports = model("User", userSchema);
