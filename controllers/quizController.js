@@ -119,7 +119,6 @@ module.exports = {
         const { userAnswer } = req.body;
         const questionIndex = parseInt(req.params.index);
         const nextQuestionIndex = ++req.params.index;
-        console.log(nextQuestionIndex);
         
         try {
             const quiz = await findQuiz(quizId);
