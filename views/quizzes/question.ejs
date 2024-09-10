@@ -1,0 +1,20 @@
+
+<h2>Question <%= questionIndex + 1 %> of <%= quiz.questions.length %></h2>
+<% if (questionIndex > 0) { %>
+       <p><%=isCorrect ? "Correct" : "Incorrect" %></p> 
+<%}%>
+ 
+<form action="<%= `/quizzes/${quiz._id}/question/${questionIndex}/grade` %>" method="POST">
+    <h4><%= question.statement %></h4>
+    <input type="hidden" name="answers" value="">
+    <% question.options.forEach((option, index) => { %>
+        <div>
+            <input type="radio" name="userAnswer" id="<%= index %>" value="<%= option %>">
+            <label for="<%=index%>"><%= option %></label>
+        </div>
+    <%});%>
+     <button type="submit">Submit</button>
+</form>
+
+<%- contentFor('title') %>
+<%= quiz.title %>

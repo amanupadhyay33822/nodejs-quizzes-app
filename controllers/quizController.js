@@ -1,9 +1,29 @@
 const Quiz = require("../models/Quiz")
 
+const findQuiz = (quizId) => {
+    return Quiz.findById(quizId);
+};
+
+const findQuestion = (quiz, questionIndex) => {
+    if (isNaN(questionIndex) || questionIndex < 0 || questionIndex >= quiz.questions.length) {
+        throw new Error('Incorrect question index');
+    }
+    return question = quiz.questions[questionIndex];
+};
+
 module.exports = {
-        // Views
+    // Views
     indexView: (req, res) => {
         res.render("quizzes/index")
+    },
+    questionView : (req, res) => {
+        res.render("quizzes/question")
+    },
+
+    resultsView: (req, res) => {
+        res.locals.score = req.session.score;
+        res.locals.quizLength = req.session.quizLength
+        res.render("quizzes/results")
     },
 
     // CRUD
@@ -20,20 +40,21 @@ module.exports = {
     getQuiz: async (req, res) => {
         const quizId = req.params.id;
         try {
-            const quiz = await Quiz.findById(quizId);
+            const quiz = findQuiz(quizId);
             res.json(quiz);
         } catch(error) {
-            console.log(`Error retreiving quiz ${error.message}`);
+            console.log(`Error retreiving quiz Get Quiz ${error.message}`);
         }
     },
 
-    getQuizzes: async (req, res) => {
+    getQuizzes: async (req, res, next) => {
         try {
             const quizzes = await Quiz.find();
-            res.json(quizzes);
+            res.locals.quizzes = quizzes;
+            next();
         } catch(error) {
-            console.log(`Error retreiving quizzes ${error.message}`);
-            
+            console.log(`Error retreiving quizzes ${error.message}`); 
+            next(error);
         }
     },
 
@@ -59,10 +80,74 @@ module.exports = {
         }
     },
 
+    //Initialize quiz score
+    startQuiz: async (req, res, next) => {
+        const quizId = req.params.id;
+        req.session.score = 0;
+        req.session.quizIndex = 0;
+        try {
+            const quiz = await findQuiz(quizId);
+            req.session.quizLength = quiz.questions.length;
+            res.locals.redirect = `/quizzes/${quizId}/question/${req.session.quizIndex}`;
+            next();
+        } catch(error) {
+            console.log(`Error retreiving question Start Quiz ${error.message}`);
+            next(error);
+        }
+    },
+
+    //Question related controllers
+    getQuestion: async (req, res, next) => {
+        const quizId = req.params.id;
+        const questionIndex = parseInt(req.params.index);
+        try {
+            const quiz = await findQuiz(quizId);
+            const question = findQuestion(quiz, questionIndex);
+
+            res.locals.quiz = quiz;
+            res.locals.question = question;
+            res.locals.questionIndex = questionIndex;
+            next();
+        } catch(error) {
+            console.log(`Error retreiving question Get Qustion ${error.message}`);
+            next(error);
+        }
+    },
+
+    gradeQuestion: async (req, res, next) => {
+        const quizId = req.params.id;
+        const { userAnswer } = req.body;
+        const questionIndex = parseInt(req.params.index);
+        const nextQuestionIndex = ++req.params.index;
+        console.log(nextQuestionIndex);
+        
+        try {
+            const quiz = await findQuiz(quizId);
+            const question = findQuestion(quiz, questionIndex);
+
+            const correctAnswer = question.correctAnswer;
+
+            isCorrect = correctAnswer === userAnswer;
+            res.locals.isCorrect = isCorrect;
+            
+            if (isCorrect) req.session.score += 1;
+
+            if (nextQuestionIndex == req.session.quizLength) {
+                res.locals.redirect = "/quizzes/results";                
+            } else {
+                res.locals.redirect = `/quizzes/${quizId}/question/${nextQuestionIndex}`;
+            }
+            next();
+        } catch(error) {
+            console.log(`Error retreiving question Grade Qustion ${error.message}`);
+            next(error);
+        }
+    },
+
     //redirect
     redirectView: (req, res, next) => {
         const redirectPath = res.locals.redirect;
         if (redirectPath) res.redirect(redirectPath);
         else next();
     }
-}
+};
