@@ -11,6 +11,13 @@ const findQuestion = (quiz, questionIndex) => {
     return question = quiz.questions[questionIndex];
 };
 
+const getQuizAttemptedByUser = (user, quizId) => {
+    const userQuizzes = user.quizzes;
+    return userQuizzes.filter((quiz) => {
+        return quiz._id == quizId
+    })[0];
+};
+
 module.exports = {
     // Views
     indexView: (req, res) => {
@@ -84,11 +91,30 @@ module.exports = {
     startQuiz: async (req, res, next) => {
         const quizId = req.params.id;
         req.session.score = 0;
-        req.session.quizIndex = 0;
+        req.session.questionIndex = 0;
+        
         try {
             const quiz = await findQuiz(quizId);
-            req.session.quizLength = quiz.questions.length;
-            res.locals.redirect = `/quizzes/${quizId}/question/${req.session.quizIndex}`;
+            req.session.quizLength = quiz.questions.length;         
+            
+            if (res.locals.currentUser) {
+                const quizAttempted = getQuizAttemptedByUser(res.locals.currentUser, quizId);
+
+                if (quizAttempted) {
+                    req.session.score = quizAttempted.score;
+                    req.session.questionIndex = quizAttempted.questionIndex;
+                    
+                    if (quizAttempted.questionIndex == quiz.questions.length) {
+                        res.locals.redirect = `/quizzes/results`;
+                        next();
+                    }
+                } else {
+                    res.locals.currentUser.quizzes.push(quiz);
+                    res.locals.currentUser.save();
+                }   
+            }
+            
+            res.locals.redirect = `/quizzes/${quizId}/question/${req.session.questionIndex}`;
             next();
         } catch(error) {
             console.log(`Error retreiving question Start Quiz ${error.message}`);
@@ -127,15 +153,19 @@ module.exports = {
             const correctAnswer = question.correctAnswer;
 
             isCorrect = correctAnswer === userAnswer;
-            res.locals.isCorrect = isCorrect;
+            req.flash("isQuestionCorrect", isCorrect);
             
             if (isCorrect) req.session.score += 1;
 
-            if (nextQuestionIndex == req.session.quizLength) {
-                res.locals.redirect = "/quizzes/results";                
-            } else {
-                res.locals.redirect = `/quizzes/${quizId}/question/${nextQuestionIndex}`;
+            // User LoggedIn
+            if (res.locals.currentUser) {
+                const quizAttempted = getQuizAttemptedByUser(res.locals.currentUser, quizId);
+                quizAttempted.score = req.session.score;
+                quizAttempted.questionIndex = nextQuestionIndex;
+                res.locals.currentUser.save();
             }
+
+            res.locals.redirect = (nextQuestionIndex == req.session.quizLength) ? "/quizzes/results" : `/quizzes/${quizId}/question/${nextQuestionIndex}`;
             next();
         } catch(error) {
             console.log(`Error retreiving question Grade Qustion ${error.message}`);

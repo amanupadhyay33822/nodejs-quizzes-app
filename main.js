@@ -49,7 +49,7 @@ app.use(passport.session());
 
 /* Custom Middleware
 - Associate connectFlash to flasses on response
-- Check is a user is loggedin, and assign that user to currentUser
+- Check if a user is loggedin, and assign that user to currentUser
 */
 app.use((req, res, next) => {
     res.locals.flashMessages = req.flash();
