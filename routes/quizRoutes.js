@@ -5,6 +5,7 @@ const quizController = require("../controllers/quizController");
 //GET
 router.get("/:id/question/:index", quizController.getQuestion,  quizController.questionView)
 router.get("/:id/start", quizController.startQuiz, quizController.redirectView)
+router.get("/:id/reset", quizController.resetQuiz, quizController.redirectView)
 router.get("/results", quizController.resultsView)
 router.get("/:id", quizController.getQuiz)
 router.get("/", quizController.getQuizzes, quizController.indexView)

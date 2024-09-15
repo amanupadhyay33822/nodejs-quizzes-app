@@ -30,6 +30,7 @@ module.exports = {
     resultsView: (req, res) => {
         res.locals.score = req.session.score;
         res.locals.quizLength = req.session.quizLength
+        res.locals.quizId = req.session.quizId;
         res.render("quizzes/results")
     },
 
@@ -103,7 +104,7 @@ module.exports = {
                 if (quizAttempted) {
                     req.session.score = quizAttempted.score;
                     req.session.questionIndex = quizAttempted.questionIndex;
-                    
+                    req.session.quizId = quizId;
                     if (quizAttempted.questionIndex == quiz.questions.length) {
                         res.locals.redirect = `/quizzes/results`;
                         next();
@@ -118,6 +119,27 @@ module.exports = {
             next();
         } catch(error) {
             console.log(`Error retreiving question Start Quiz ${error.message}`);
+            next(error);
+        }
+    },
+
+    resetQuiz: async (req, res, next) => {
+        const quizId = req.params.id;
+        req.session.score = 0;
+        req.session.questionIndex = 0;
+        const quizAttempted = getQuizAttemptedByUser(res.locals.currentUser, quizId);
+        try {
+            const quiz = await findQuiz(quizId);
+            req.session.quizLength = quiz.questions.length;
+            if (quizAttempted) {
+                quizAttempted.score = req.session.score;
+                quizAttempted.questionIndex = req.session.questionIndex;
+                res.locals.currentUser.save();
+            }
+            res.locals.redirect = `/quizzes/${quizId}/start`;
+            next();
+        } catch(error) {
+            console.log(`Error retreiving question Restart Quiz ${error.message}`);
             next(error);
         }
     },
