@@ -3,7 +3,10 @@ const { model, Schema } = mongoose;
 
 const courseSchema = new Schema({
     name: { type: String, require: true},
+    code: { type: String },
+    description: {type: String, maxLength: 180, require: true},
     category: { type: String },
+    icon: { type: String, require: true },
     quizzes: [{ type: Schema.Types.ObjectId, ref: "Quiz"}]
 },
 {
