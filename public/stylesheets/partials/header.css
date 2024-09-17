@@ -1,0 +1,36 @@
+nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+    background-color: rgb(39, 37, 37);
+    color: white;
+    height: 5vh;
+}
+
+.nav-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 2em;
+    width: 35%;
+    max-width: 450px;
+    min-width: 300px;
+}
+
+.nav-right a:visited {
+    color:white;
+}
+
+#username-span {
+    display: inline-block;
+    padding: 0.5em;
+    border-radius: 5em;
+    background-color: #fff;
+    color: #000;
+}
+
+#username-span a:visited{
+    color: #000;    
+}

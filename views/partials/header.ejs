@@ -1,0 +1,21 @@
+<nav>
+    <div class="nav-right">
+        <a href="/">Home</a>
+        <a href="/courses">Courses</a>
+        <% if (loggedIn) { %>
+            <span>
+                <a href="/users/logout">Log out</a>
+            </span>
+            <span id="username-span"> 
+                Hi, <a href="<%=`/users/${currentUser._id}`%>"><%= currentUser.username.charAt(0).toUpperCase() +  currentUser.username.slice(1) %></a>
+            </span>
+            
+        <%} else {%>
+            <a href="/users/login">Log In</a>
+            <a href="/users/signup">Sign Up</a>
+        <% } %>
+    </div>
+</nav>
+
+
+<link rel="stylesheet" href="/stylesheets/partials/header.css">

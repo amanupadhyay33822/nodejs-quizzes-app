@@ -1,13 +1,2 @@
-Home View
-
-<% if (loggedIn) { %>
-    <span>Logged in as <a href="<%=`/users/${currentUser._id}`%>"><%= currentUser.username %></a></span>
-    <span><a href="/users/logout">Log out</a></span>
-<%} else {%>
-    <a href="/users/login">Log In</a>
-<% } %>
-
-<a href="/courses">See Courses</a>
-
 <%- contentFor('title') %>
 Home
