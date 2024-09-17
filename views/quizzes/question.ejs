@@ -1,8 +1,10 @@
 
 <h2>Question <%= questionIndex + 1 %> of <%= quiz.questions.length %></h2>
 <% if (flashMessages) { %>
-    <% if (flashMessages.isQuestionCorrect) { %>
-       <p><%= flashMessages.isQuestionCorrect ? "Correct" : "Incorrect" %></p> 
+    <% if (flashMessages.correct) { %>
+        <p><%= flashMessages.correct %></p>
+    <%} else if(flashMessages.incorrect) {%>
+       <p><%= flashMessages.incorrect %></p>
     <%}%>
 <%}%>
  

@@ -1,8 +1,14 @@
 <h1>Results</h1>
-<h2><%= score %> of <%= quizLength %></h2>
-<h2>Score: <%= ((score / quizLength) * 100).toFixed(2) %></h2>
-<a href="/quizzes">Try another Quiz</a><br>
-<a href=<%= `/quizzes/${quizId}/reset` %>>Restart Quiz</a>
+
+<h2><%= quiz.title %></h2>
+
+<h2><%= score %> of <%= quiz.questions.length %></h2>
+<h2>Score: <%= ((score / quiz.questions.length) * 100).toFixed(2) %></h2>
+
+<a href="/courses">Try another Quiz</a><br>
+<% if (currentUser) { %>
+    <a href=<%= `/quizzes/${quiz._id}/reset` %>>Restart Quiz</a>
+<%}%>
 
 <%- contentFor('title') %>
-Result
+Quiz Results

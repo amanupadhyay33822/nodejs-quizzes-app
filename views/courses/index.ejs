@@ -1,0 +1,10 @@
+<section>
+    <ul>
+        <% courses.forEach(course => { %>
+            <li><a href="<%=`courses/${course._id}/quizzes`%>"><%= course.name %></a></li>
+        <%});%>
+    </ul>
+</section>
+
+<%- contentFor('title')%>
+Courses

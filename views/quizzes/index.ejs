@@ -1,7 +1,9 @@
 <section>
     <ul>
         <% quizzes.forEach(quiz => { %>
-            <li><a href="<%=`quizzes/${quiz._id}/start`%>"><%= quiz.title %></a></li>
+            <li>
+                <a href="<%=`/quizzes/${quiz._id}/start`%>"><%= quiz.title %></a>
+            </li>
         <%});%>
     </ul>
 </section>

@@ -29,8 +29,7 @@ module.exports = {
 
     resultsView: (req, res) => {
         res.locals.score = req.session.score;
-        res.locals.quizLength = req.session.quizLength
-        res.locals.quizId = req.session.quizId;
+        res.locals.quiz = req.session.quiz;
         res.render("quizzes/results")
     },
 
@@ -95,8 +94,8 @@ module.exports = {
         req.session.questionIndex = 0;
         
         try {
-            const quiz = await findQuiz(quizId);
-            req.session.quizLength = quiz.questions.length;         
+            const quiz = await findQuiz(quizId);        
+            req.session.quiz = quiz;
             
             if (res.locals.currentUser) {
                 const quizAttempted = getQuizAttemptedByUser(res.locals.currentUser, quizId);
@@ -104,7 +103,6 @@ module.exports = {
                 if (quizAttempted) {
                     req.session.score = quizAttempted.score;
                     req.session.questionIndex = quizAttempted.questionIndex;
-                    req.session.quizId = quizId;
                     if (quizAttempted.questionIndex == quiz.questions.length) {
                         res.locals.redirect = `/quizzes/results`;
                         next();
@@ -129,8 +127,6 @@ module.exports = {
         req.session.questionIndex = 0;
         const quizAttempted = getQuizAttemptedByUser(res.locals.currentUser, quizId);
         try {
-            const quiz = await findQuiz(quizId);
-            req.session.quizLength = quiz.questions.length;
             if (quizAttempted) {
                 quizAttempted.score = req.session.score;
                 quizAttempted.questionIndex = req.session.questionIndex;
@@ -174,11 +170,14 @@ module.exports = {
 
             const correctAnswer = question.correctAnswer;
 
-            isCorrect = correctAnswer === userAnswer;
-            req.flash("isQuestionCorrect", isCorrect);
+            isAnswerCorrect = correctAnswer === userAnswer;
+            if (isAnswerCorrect) {
+                req.session.score += 1;
+                req.flash("correct", "Correct Answer!");
+            } else {
+                req.flash("incorrect", "Incorrect Answer")
+            }
             
-            if (isCorrect) req.session.score += 1;
-
             // User LoggedIn
             if (res.locals.currentUser) {
                 const quizAttempted = getQuizAttemptedByUser(res.locals.currentUser, quizId);
@@ -187,7 +186,10 @@ module.exports = {
                 res.locals.currentUser.save();
             }
 
-            res.locals.redirect = (nextQuestionIndex == req.session.quizLength) ? "/quizzes/results" : `/quizzes/${quizId}/question/${nextQuestionIndex}`;
+            console.log(`Next Question: ${nextQuestionIndex}`);
+            console.log(`Quiz Length: ${req.session.quiz.questions.length}`);
+            
+            res.locals.redirect = (nextQuestionIndex == req.session.quiz.questions.length) ? "/quizzes/results" : `/quizzes/${quizId}/question/${nextQuestionIndex}`;
             next();
         } catch(error) {
             console.log(`Error retreiving question Grade Qustion ${error.message}`);
