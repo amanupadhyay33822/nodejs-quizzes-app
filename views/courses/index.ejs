@@ -1,10 +1,30 @@
-<section>
-    <ul>
+<section class="courses">
+    <section class="cards-container">
         <% courses.forEach(course => { %>
-            <li><a href="<%=`courses/${course._id}/quizzes`%>"><%= course.name %></a></li>
+            <div class="course-card">
+                <div class="course-icon-container">
+                    <img src=<%= `/icons/courses/${course.icon}` %> alt=<%= course.name %> width="100">
+                </div>
+                <div class="course-title-container">
+                    <p id="course-title">
+                        <% if (course.code) { %>
+                            <span><%= course.code %></span>
+                        <%}%>
+                        <%= course.name %>
+                    </p>
+                </div>
+                <div class="course-description-container">
+                    <p id="course-description"><%= course.description %></p>
+                </div>
+                <div>
+                    <a href="<%= `courses/${course._id}/quizzes` %>" class="quizzes-link">Go</a>
+                </div>
+            </div>
         <%});%>
-    </ul>
+    </section>
 </section>
 
+
+<link rel="stylesheet" href="/stylesheets/courses/index.css">
 <%- contentFor('title')%>
 Courses
