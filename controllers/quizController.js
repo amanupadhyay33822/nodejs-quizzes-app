@@ -185,10 +185,7 @@ module.exports = {
                 quizAttempted.questionIndex = nextQuestionIndex;
                 res.locals.currentUser.save();
             }
-
-            console.log(`Next Question: ${nextQuestionIndex}`);
-            console.log(`Quiz Length: ${req.session.quiz.questions.length}`);
-            
+           
             res.locals.redirect = (nextQuestionIndex == req.session.quiz.questions.length) ? "/quizzes/results" : `/quizzes/${quizId}/question/${nextQuestionIndex}`;
             next();
         } catch(error) {
