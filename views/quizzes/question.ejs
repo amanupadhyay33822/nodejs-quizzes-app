@@ -1,24 +1,36 @@
 
-<h2>Question <%= questionIndex + 1 %> of <%= quiz.questions.length %></h2>
-<% if (flashMessages) { %>
-    <% if (flashMessages.correct) { %>
-        <p><%= flashMessages.correct %></p>
-    <%} else if(flashMessages.incorrect) {%>
-       <p><%= flashMessages.incorrect %></p>
-    <%}%>
-<%}%>
- 
-<form action="<%= `/quizzes/${quiz._id}/question/${questionIndex}/grade` %>" method="POST">
-    <h4><%= question.statement %></h4>
-    <input type="hidden" name="answers" value="">
-    <% question.options.forEach((option, index) => { %>
-        <div>
-            <input type="radio" name="userAnswer" id="<%= index %>" value="<%= option %>">
-            <label for="<%=index%>"><%= option %></label>
-        </div>
-    <%});%>
-     <button type="submit">Submit</button>
-</form>
+<section id="question-container">
+    <div id="question-wrapper">
+        <h2>Question <%= questionIndex + 1 %> of <%= quiz.questions.length %></h2>
+        <% if (flashMessages) { %>
+            <% if (flashMessages.correct) { %>
+                <div id="correct-answer" class="answer">
+                    <img src="/icons/quizzes/check.png" alt="" srcset="" width="20"><p><%= flashMessages.correct %></p>
+                </div>
+            <%} else if(flashMessages.incorrect) {%>
+            <div id="incorrect-answer" class="answer">
+                <img src="/icons/quizzes/cross.png" alt="" srcset="" width="20"><p><%= flashMessages.incorrect %></p>
+            </div>    
+            <%}%>
+        <%}%>
+        
+        <form action="<%= `/quizzes/${quiz._id}/question/${questionIndex}/grade` %>" method="POST">
+            <h4><%= question.statement %></h4>
+            <input type="hidden" name="answers" value="">
+            <% question.options.forEach((option, index) => { %>
+                <div class="option">
+                    <input type="radio" name="userAnswer" id="<%= index %>" value="<%= option %>" required>
+                    <label for="<%=index%>"><%= option %></label>
+                </div>
+            <%});%>
+            <div id="button-wrapper">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</section>
 
+<link rel="stylesheet" href="/stylesheets/quizzes/question.css">
+<script src="/javascripts/quizzes/question.js"></script>
 <%- contentFor('title') %>
 <%= quiz.title %>
