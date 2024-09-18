@@ -1,12 +1,21 @@
-<section>
-    <ul>
-        <% quizzes.forEach(quiz => { %>
-            <li>
-                <a href="<%=`/quizzes/${quiz._id}/start`%>"><%= quiz.title %></a>
-            </li>
+<section class="quiz-cards-container">
+    <div class="quiz-cards">
+        <% quizzes.forEach(quiz=> { %>
+            <div class="quiz-card">
+                <div>
+                    <p><%= quiz.title %></p>
+                </div>
+                <div>
+                    <a href="<%= `/quizzes/${quiz._id}/start` %>" id="start-quiz-link">
+                        Start
+                    </a>
+                </div>
+            </div>
         <%});%>
-    </ul>
+    </div>
 </section>
 
+<link rel="stylesheet" href="/stylesheets/quizzes/index.css">
+
 <%- contentFor('title') %>
-Quizzes
+    Quizzes
