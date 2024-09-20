@@ -13,13 +13,13 @@
     <h2><%= score %> of <%= quiz.questions.length %></h2>
 
     <div id="score-container" class="flex-centered">
-        <div id="points-score-container" class="card">
-            <h2>Your Score</h2>
-            <p>Score: <%= score %></p>
-        </div>
         <div id="percentage-score-container" class="card">
-            <h2>Your Points</h2>
+            <h2>Your Score</h2>
             <p>Score: <%= percentage.toFixed(2) %>%</p>
+        </div>
+        <div id="points-score-container" class="card">
+            <h2>Your Points</h2>
+            <p>Score: <%= score %></p>
         </div>
     </div>
     
