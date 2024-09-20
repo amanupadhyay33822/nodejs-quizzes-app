@@ -1,0 +1,33 @@
+.flex-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#results-container {
+    flex-direction: column;
+}
+
+#score-container {
+    gap: 3em;
+    margin-bottom: 3em;
+}
+
+.card {
+    border-radius: 1.5em;
+    box-shadow: 0 4px 8px 0 #00000033;
+    padding: 1.5em 3em;
+}
+
+.results-links {
+    gap: 3em;
+}
+
+.results-links a {
+    background-color: #201a1a;
+    color: #fff;
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    width: 10em;
+    text-align: center;
+}

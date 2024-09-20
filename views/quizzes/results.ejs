@@ -1,14 +1,36 @@
-<h1>Results</h1>
+<section id="results-container" class="flex-centered">
+    <h2><%= quiz.title %></h2>
+    <h1>Results</h1>
+    <% const percentage =  score / quiz.questions.length * 100 %>
+    <div> 
+        <% if (percentage >= 70) { %>
+            <img src="/icons/quizzes/pass.png" alt="pass" width="85">
+        <%} else { %>
+            <img src="/icons/quizzes/fail.png" alt="fail" width="85">
+        <%}%>
+    </div>
 
-<h2><%= quiz.title %></h2>
+    <h2><%= score %> of <%= quiz.questions.length %></h2>
 
-<h2><%= score %> of <%= quiz.questions.length %></h2>
-<h2>Score: <%= ((score / quiz.questions.length) * 100).toFixed(2) %></h2>
+    <div id="score-container" class="flex-centered">
+        <div id="points-score-container" class="card">
+            <h2>Your Score</h2>
+            <p>Score: <%= score %></p>
+        </div>
+        <div id="percentage-score-container" class="card">
+            <h2>Your Points</h2>
+            <p>Score: <%= percentage.toFixed(2) %>%</p>
+        </div>
+    </div>
+    
+    <div class="results-links flex-centered">
+        <a href="/courses">Take another Quiz</a><br>
+        <% if (currentUser) { %>
+            <a href=<%= `/quizzes/${quiz._id}/reset` %>>Restart Quiz</a>
+        <%}%>
+    </div>
+</section>
 
-<a href="/courses">Try another Quiz</a><br>
-<% if (currentUser) { %>
-    <a href=<%= `/quizzes/${quiz._id}/reset` %>>Restart Quiz</a>
-<%}%>
-
+<link rel="stylesheet" href="/stylesheets/quizzes/results.css">
 <%- contentFor('title') %>
-Quiz Results
+<%= quiz.title %> Results
