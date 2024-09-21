@@ -1,0 +1,75 @@
+.flex-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#container {
+    flex-direction: column;
+    height: 100%;
+}
+
+#container form {
+    flex-direction: column;
+    margin: auto;
+    width: 300px;
+}
+
+.form-controllers-wrapper {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 1em;
+}
+
+.form-controllers-wrapper label, input {
+    width: 100%;
+}
+
+.form-controllers-wrapper label {
+    color: #6b7280;
+    font-weight: 400;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    padding: .5rem .75rem;
+    border-radius: .5rem;
+    border: 1px solid #6b7280;
+}
+
+input[type="submit"]{
+    padding: .5rem .75rem;
+    border-radius: .25rem;
+    border: none;
+    background-color: #3b76a5;
+    color: #fff;
+}
+
+input[type="submit"]:hover {
+    cursor: pointer;
+}
+
+.horizontal-line {
+    border-bottom: 1px solid rgba(34,34,34,.15);
+    text-align: center;
+    margin: 25px auto;
+    line-height: 0;
+    width: 100%;
+}
+
+.horizontal-line span {
+    padding: 12px;
+    background-color: white;
+    color: black;
+}
+
+#link {
+    margin: 0;
+}
+
+#link a {
+    color: #000;
+    font-weight: 500;
+}

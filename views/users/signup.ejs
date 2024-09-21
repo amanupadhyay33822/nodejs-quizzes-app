@@ -1,28 +1,53 @@
-<div>
+<section id="container" class="flex-centered">
     <% if (flashMessages) { %>
         <% if (flashMessages.error) { %>
-            <div class="flash success"><%= flashMessages.error %></div>
+            <div id="flash-error">
+                <p><%= flashMessages.error %></p>
+                <p id="close-icon"><img src="/icons/users/close.png" alt="close" width="12"></p>
+            </div>
         <%}%>
     <%}%>
-    <form action="/users" method="POST">
-        <h2>Sign Up</h2>
-
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username" placeholder="Username" required>
-
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" placeholder="Password" required%>>
-
-        <label for="confirm_password">Confirm Password</label>
-        <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm password" required>
-
-        <label for="email">Email address</label>
-        <input type="email" name="email" id="email" placeholder="Email address" required>
-
-
-        <button type="submit">Sign Up</button>
+    <h2>Sign Up</h2>
+    <form action="/users" method="POST" class="flex-centered">
+        <div class="form-controllers-wrapper">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" required>
+        </div>
+        <div class="form-controllers-wrapper">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required%>>
+        </div>
+        <div class="form-controllers-wrapper">
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" name="confirm_password" id="confirm_password" required>
+        </div>
+        <div class="form-controllers-wrapper">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required>
+        </div>
+        <div class="form-controllers-wrapper">
+            <input type="submit" value="Sign Up">
+        </div>
+        <div class="horizontal-line">
+            <span>or</span>
+        </div>
     </form>
-        <a href="/users/login">Log In</a>
-</div>
+    <div></div>
+        <p id="link">Alredy have an account? <a href="/users/login">Log In</a></p>  
+    </div>
+</section>
+
+<link rel="stylesheet" href="/stylesheets/users/formStyle.css">
+<link rel="stylesheet" href="/stylesheets/users/signup.css">
+
+<script>
+    window.addEventListener("load", () => {
+        const closeIcon = document.getElementById("close-icon");
+        closeIcon.addEventListener("click", () => {
+            const errorMessageDiv = document.getElementById("flash-error");
+            errorMessageDiv.style.display = "none"; 
+        });        
+    });
+</script>
 <%- contentFor('title') %>
 Sign Up
