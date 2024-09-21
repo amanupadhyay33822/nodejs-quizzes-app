@@ -1,16 +1,29 @@
-<div>
-    <form action="/users/login" method="POST">
-        <h2>Log In</h2>
+<section id="login-container" class="flex-centered">
+    <h2>Welcome to Quizzes</h2>
+    <form action="/users/login" method="POST" class="flex-centered"> 
+        <div class="form-controllers-wrapper">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required>
+        </div>
+        <div class="form-controllers-wrapper">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required>
+        </div>
 
-        <label for="email">Email address</label>
-        <input type="email" name="email" id="email" placeholder="Email address" required>
-
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" placeholder="Password" required>
-
-        <button type="submit">Log In</button>
+        <div class="form-controllers-wrapper">
+            <input type="submit" value="Login">
+        </div>
+        
+        <div class="horizontal-line">
+            <span>or</span>
+        </div>
     </form>
-        <a href="/users/signup">Sign Up</a>
-</div>
+
+    <div>
+        <p id="sign-up">Don't have an account? <a href="/users/signup">Sign Up</a></p>  
+    </div>
+</section>
+
+<link rel="stylesheet" href="/stylesheets/users/login.css">
 <%- contentFor('title') %>
-Sign Up
+Log In
