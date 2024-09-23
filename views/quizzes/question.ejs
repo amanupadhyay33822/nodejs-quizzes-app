@@ -1,5 +1,8 @@
 
 <section id="question-container">
+    <script>
+        var questionGraded = false;
+    </script>
     <div id="question-wrapper">
         <h2>Question <%= questionIndex + 1 %> of <%= quiz.questions.length %></h2>
         <% if (flashMessages) { %>
@@ -24,7 +27,19 @@
                 </div>
             <%});%>
             <div id="button-wrapper">
-                <button type="submit">Submit</button>
+                <% if (flashMessages.graded) { %>
+                    <script>
+                        var questionGraded = true;
+                    </script>
+                    <% const nextQuestion = questionIndex + 1; %>
+                    <% if (nextQuestion == quiz.questions.length) { %>
+                        <a class="btn" href="<%= `/quizzes/results` %>">Next</a>    
+                    <%} else {%>
+                        <a class="btn" href="<%= `/quizzes/${quiz._id}/question/${nextQuestion}` %>">Next question</a>
+                    <%}%>                
+                <%} else { %>
+                    <input type="submit" value="Submit" id="gradeBtn" class="btn" disabled>
+                <%}%>  
             </div>
         </form>
     </div>

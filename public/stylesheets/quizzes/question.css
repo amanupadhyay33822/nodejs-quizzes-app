@@ -41,18 +41,25 @@ form {
     flex-direction: column;
 }
 
-button[type="submit"] {
+.btn {
     border: none;
     border-radius: .5em;
-    background-color: #e59500;
+    background-color: #0A66C2;
     color: #fff;
-    padding: .8em 2em;
+    padding: .5em .8em;
     align-self: flex-end;
-    font-weight: bold;
+    font-family: "Roboto", sans-serif;
+    font-size: 1em;
 }
 
-button[type="submit"]:hover {
+.btn:hover {
+    background-color: #004182;
     cursor: pointer;
+}
+
+input[type="submit"] {
+    display: inline-block;
+    background-color: #EBEBEB;
 }
 
 input[type="radio"] {
@@ -81,4 +88,8 @@ input[type="radio"] {
 
 .option:hover {
     background-color: #98c1d9;
+}
+
+.disabled label {
+    cursor:not-allowed;
 }

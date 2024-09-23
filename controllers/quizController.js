@@ -186,7 +186,8 @@ module.exports = {
                 res.locals.currentUser.save();
             }
            
-            res.locals.redirect = (nextQuestionIndex == req.session.quiz.questions.length) ? "/quizzes/results" : `/quizzes/${quizId}/question/${nextQuestionIndex}`;
+            req.flash("graded", true);
+            res.locals.redirect = `/quizzes/${quizId}/question/${questionIndex}`;
             next();
         } catch(error) {
             console.log(`Error retreiving question Grade Qustion ${error.message}`);

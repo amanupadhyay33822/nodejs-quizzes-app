@@ -6,6 +6,11 @@
 
 #results-container {
     flex-direction: column;
+    padding: 1.5em;
+}
+
+#results-container h2 {
+    text-align: center;
 }
 
 #score-container {
@@ -14,13 +19,13 @@
 }
 
 .card {
-    border-radius: 1.5em;
+    border-radius: 1em;
     box-shadow: 0 4px 8px 0 #00000033;
     padding: 1.5em 3em;
 }
 
 .results-links {
-    gap: 3em;
+    flex-direction: column;
 }
 
 .results-links a {
