@@ -1,23 +1,31 @@
-<div>
+<section id="container" class="flex-centered">
+    <h2>Update User</h2>
     <form action="<%=`/users/${user._id}?_method=PUT`%>" method="POST">
-        <h2>Update User</h2>
-
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username" placeholder="Username" value="<%=user.username%>" required>
-
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" placeholder="Password">
-
-        <label for="confirm_password">Confirm Password</label>
-        <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm password">
-
-        <label for="email">Email address</label>
-        <input type="email" name="email" id="email" placeholder="Email address" value="<%=user.email%>" required>
-
-
-        <button type="submit">Update</button>
+        <div class="form-controllers-wrapper">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" placeholder="Username" value="<%=user.username%>" required>
+        </div>
+        <div class="form-controllers-wrapper">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" placeholder="Password">
+        </div>
+        <div class="form-controllers-wrapper">
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm password">
+        </div>
+        <div class="form-controllers-wrapper">
+            <label for="email">Email address</label>
+            <input type="email" name="email" id="email" placeholder="Email address" value="<%=user.email%>" required>
+        </div>
+        <div class="form-controllers-wrapper">
+            <input type="submit" value="Update">
+        </div>
     </form>
-        <a href="/users">Cancel</a>
-</div>
+    <div class="cancel-container">
+        <a href="/">Cancel</a>
+    </div>
+</section>
+
+<link rel="stylesheet" href="/stylesheets/users/formStyle.css">
 <%- contentFor('title') %>
 Update
