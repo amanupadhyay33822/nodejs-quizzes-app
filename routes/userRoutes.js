@@ -11,7 +11,7 @@ router.get("/", userController.getUsers, userController.indexView)
 
 // POST
 router.post("/login", userController.authenticate)
-router.post("/", userController.create, userController.redirectView)
+router.post("/", userController.create, userController.authenticate)
 
 // PUT
 router.put("/:id", userController.update, userController.redirectView)
