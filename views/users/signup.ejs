@@ -37,9 +37,6 @@
     </div>
 </section>
 
-<link rel="stylesheet" href="/stylesheets/users/formStyle.css">
-<link rel="stylesheet" href="/stylesheets/users/signup.css">
-
 <script>
     window.addEventListener("load", () => {
         const closeIcon = document.getElementById("close-icon");
@@ -49,5 +46,10 @@
         });        
     });
 </script>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/stylesheets/users/formStyle.css">
+<link rel="stylesheet" href="/stylesheets/users/signup.css">
+
 <%- contentFor('title') %>
 Sign Up

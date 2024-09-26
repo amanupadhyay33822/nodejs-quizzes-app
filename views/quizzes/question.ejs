@@ -1,4 +1,3 @@
-
 <section id="question-container">
     <script>
         var questionGraded = false;
@@ -45,7 +44,10 @@
     </div>
 </section>
 
-<link rel="stylesheet" href="/stylesheets/quizzes/question.css">
 <script src="/javascripts/quizzes/question.js"></script>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/stylesheets/quizzes/question.css">
+
 <%- contentFor('title') %>
 <%= quiz.title %>
