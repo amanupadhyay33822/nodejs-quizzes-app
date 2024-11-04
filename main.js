@@ -60,12 +60,12 @@ app.use((req, res, next) => {
 });
 
 app.use(router);
-app.post("/add/qs", async(req, res) => {
+app.post("/add/qs/:id", async(req, res) => {
     // Log the form data to the console
   
     try {
         const { text, type, mcq, options, trueFalseAnswer, descriptive } = req.body.question;
-        const quizId = "6724a76440acea6f692226a8"; // Assuming quiz ID is passed to identify the specific quiz
+        const quizId = req.params.id; // Assuming quiz ID is passed to identify the specific quiz
     
         if (!quizId) {
           return res.status(400).send("Quiz ID is required");
@@ -112,7 +112,7 @@ app.post("/add/qs", async(req, res) => {
         quiz.questions.push(questionData);
         await quiz.save();
     
-        res.status(200).send("Question added successfully!");
+        res.render("home/index", { message: "Question added successfully!" });
     
       } catch (error) {
         alert(error.message);

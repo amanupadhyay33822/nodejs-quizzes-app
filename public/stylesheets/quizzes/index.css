@@ -13,6 +13,36 @@
     gap: 2em;
     width: 500px;
 }
+.quiz-card .button-container {
+    display: flex;
+    gap: 1em;
+}
+
+.quiz-card a {
+    display: inline-block;
+    color: #fff;
+    padding: 0.6em 1.2em;
+    border-radius: 0.5em;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-weight: 500;
+}
+
+.quiz-card #start-quiz-link {
+    background-color: #38b000;
+}
+
+.quiz-card #start-quiz-link:hover {
+    background-color: #2a8500;
+}
+
+.quiz-card #add-question-link {
+    background-color: #0077cc;
+}
+
+.quiz-card #add-question-link:hover {
+    background-color: #005fa3;
+}
 
 .quiz-card {
     display: flex;

@@ -1,14 +1,21 @@
 <section class="quiz-cards-container">
     <div class="quiz-cards">
+        
         <% quizzes.forEach(quiz=> { %>
             <div class="quiz-card">
                 <div>
                     <p><%= quiz.title %></p>
                 </div>
-                <div>
+                <div class="button-container">
                     <a href="<%= `/quizzes/${quiz._id}/start` %>" id="start-quiz-link">
-                        Start
+                        Start 
                     </a>
+                    <% if (currentUser) { %>
+                        <a href="<%= `/admin/add-question/${quiz._id}` %>" id="add-question-link">
+                            Add Question
+                        </a>
+                    <% } %>
+                    
                 </div>
             </div>
         <%});%>

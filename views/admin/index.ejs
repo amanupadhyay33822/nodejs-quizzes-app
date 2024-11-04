@@ -9,9 +9,10 @@
 <div class="container">
   <div class="add-ques row">
     <div class="col-8 offset-2">
-      <form id="addQuestionForm" action="/add/qs" method="POST" novalidate>
-        <h3>Add Question</h3>
-        
+      <form id="addQuestionForm"  action="/add/qs/<%=id %>" method="POST" >
+        <h3>Add Question
+        </h3>
+
         <!-- Question Text -->
         <div class="mb-3">
           <label for="questionText" class="form-label">Question:</label>
@@ -23,6 +24,7 @@
             rows="4"
             required
           ></textarea>
+          <div class="error-message" id="questionTextError"></div>
         </div>
 
         <!-- Question Type -->
@@ -35,11 +37,12 @@
             required
             onchange="toggleAnswerFields()"
           >
-            <option selected disabled>Type of Question</option>
+          <option value="" selected disabled>Type of Question</option> 
             <option value="1">Multiple Choice</option>
             <option value="2">True/False</option>
             <option value="3">Descriptive</option>
           </select>
+          <div class="error-message" id="questionTypeError"></div>
         </div>
 
         <!-- Answer Section -->
@@ -56,6 +59,7 @@
                 class="form-control"
                 placeholder="Enter correct answer"
               />
+              <div class="error-message" id="correctAnswerError"></div>
             </div>
 
             <div class="option-list">
@@ -97,6 +101,7 @@
               />
               <label class="form-check-label" for="false">False</label>
             </div>
+            <div class="error-message" id="trueFalseError"></div>
           </div>
 
           <!-- Descriptive Answer -->
@@ -126,7 +131,7 @@
     const mcqSection = document.querySelector(".mcq");
     const trueFalseSection = document.querySelector(".true-false");
     const descriptiveSection = document.querySelector(".descriptive");
-
+    
     mcqSection.style.display = "none";
     trueFalseSection.style.display = "none";
     descriptiveSection.style.display = "none";
@@ -157,60 +162,75 @@
       `;
       optionList.appendChild(newOption);
     } else {
-      alert("You can add a maximum of 4 options only.");
+      const optionError = document.getElementById("questionTypeError");
+      optionError.textContent = "You can add a maximum of 4 options only.";
     }
   }
 
   document.getElementById("addQuestionForm").addEventListener("submit", function (event) {
-    event.preventDefault();
-    
-    // Basic validation checks
-    const questionText = document.getElementById("questionText").value.trim();
-    const questionType = document.getElementById("questionType").value;
-    console.log(questionText)
-    if (!questionText) {
-      alert("Please enter a question.");
+  event.preventDefault();
+
+  // Clear previous error messages
+  document.getElementById("questionTextError").textContent = "";
+  document.getElementById("questionTypeError").textContent = "";
+  document.getElementById("correctAnswerError").textContent = "";
+  document.getElementById("trueFalseError").textContent = "";
+
+  const questionText = document.getElementById("questionText").value.trim();
+  const questionType = document.getElementById("questionType").value;
+
+  // Validate question text
+  if (!questionText) {
+    document.getElementById("questionTextError").textContent = "Please enter a question.";
+    return;
+  }
+
+  // Validate question type selection
+  if (!questionType) {
+    document.getElementById("questionTypeError").textContent = "Please select a question type.";
+    return;
+  }
+
+  // Validate MCQ type
+  if (questionType === "1") {
+    const correctAnswer = document.getElementById("correctAnswer").value.trim();
+    const options = document.querySelectorAll('input[name="question[options][]"]');
+
+    if (!correctAnswer) {
+      document.getElementById("correctAnswerError").textContent = "Please enter the correct answer for the multiple-choice question.";
       return;
     }
 
-    if (!questionType) {
-      alert("Please select a question type.");
+    // Ensure exactly 4 options are provided and all are filled
+    if (options.length !== 4) {
+      document.getElementById("questionTypeError").textContent = "Please provide exactly 4 options.";
       return;
     }
 
-    if (questionType === "1") {
-      const correctAnswer = document.getElementById("correctAnswer").value.trim();
-      const options = document.querySelectorAll('input[name="question[options][]"]');
-      
-      if (!correctAnswer) {
-        alert("Please enter the correct answer for the multiple-choice question.");
-        return;
+    let allOptionsFilled = true;
+    options.forEach((option, index) => {
+      if (!option.value.trim()) {
+        allOptionsFilled = false;
+        document.getElementById("questionTypeError").textContent = `Please fill in all options (Option ${index + 1} is empty).`;
       }
-      
-      let allOptionsFilled = true;
-      options.forEach(option => {
-        if (!option.value.trim()) {
-          allOptionsFilled = false;
-        }
-      });
-      
-      if (!allOptionsFilled) {
-        alert("Please fill in all multiple-choice options.");
-        return;
-      }
-    }
+    });
 
-    if (questionType === "2") {
-      const trueFalseAnswer = document.querySelector('input[name="question[trueFalseAnswer]"]:checked');
-      if (!trueFalseAnswer) {
-        alert("Please select True or False as the answer.");
-        return;
-      }
-    }
+    if (!allOptionsFilled) return;
+  }
 
-    // Submit the form if all validations pass
-    event.target.submit();
-  });
+  // Validate True/False answer
+  if (questionType === "2") {
+    const trueFalseAnswer = document.querySelector('input[name="question[trueFalseAnswer]"]:checked');
+    if (!trueFalseAnswer) {
+      document.getElementById("trueFalseError").textContent = "Please select True or False as the answer.";
+      return;
+    }
+  }
+
+  // Submit the form if all validations pass
+  event.target.submit();
+});
+
 </script>
 
 <%- contentFor('styles') %>
