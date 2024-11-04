@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 const { model, Schema } = mongoose;
 
 const courseSchema = new Schema({
-    name: { type: String, require: true},
+    name: { type: String, required: true },
     code: { type: String },
-    description: {type: String, maxLength: 180, require: true},
+    description: { type: String, maxLength: 180, required: true },
     category: { type: String },
-    icon: { type: String, require: true },
-    quizzes: [{ type: Schema.Types.ObjectId, ref: "Quiz"}]
+    icon: { type: String, required: true },
+    quizzes: [{ type: Schema.Types.ObjectId, ref: "Quiz" }]
 },
 {
     timestamps: true

@@ -4,7 +4,7 @@
   "description": "A web application built to help students practice quizzes before their tests.",
   "main": "main.js",
   "scripts": {
-    "start": "node --watch main.js",
+    "start": "nodemon main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -40,15 +40,16 @@
   },
   "homepage": "https://github.com/AlexzGut/nodejs-quizzes-app#readme",
   "dependencies": {
-    "ejs": "^3.1.10",
-    "express": "^4.19.2",
-    "express-ejs-layouts": "^2.5.1",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.18.0",
     "method-override": "^3.0.0",
     "mongoose": "^8.6.1",
+    "nodemon": "^3.1.7",
     "passport": "^0.7.0",
     "passport-local-mongoose": "^8.0.0"
   }

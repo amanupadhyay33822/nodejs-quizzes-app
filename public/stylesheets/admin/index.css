@@ -1,0 +1,136 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  #main-header {
+    background-color: #4a90e2;
+    color: #fff;
+    text-align: center;
+    padding: 30px 20px;
+    margin-bottom: 30px;
+  }
+  
+  #main-header h1 {
+    font-size: 2.5em;
+    margin: 0;
+  }
+  
+  #main-header p {
+    font-size: 1.2em;
+    margin-top: 10px;
+  }
+  
+  /* Form styles */
+  .add-ques h3 {
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    color: #333;
+  }
+  
+  .add-ques form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  textarea,
+  input[type="text"],
+  input[type="radio"],
+  select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  textarea:focus,
+  input:focus,
+  select:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+  }
+  .true-false .form-check {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  /* Optional: Add spacing between label and radio button */
+  .true-false .form-check-label {
+    margin-left: 5px;
+  }
+  .add-option {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background-color: #f1f1f1;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+  
+  .add-option:hover {
+    background-color: #e2e2e2;
+  }
+  
+  /* True/False section */
+  .true-false .form-check {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  /* Descriptive answer section */
+  .descriptive textarea {
+    resize: vertical;
+  }
+  
+  /* Button styles */
+  #add-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #fff;
+    background-color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  #add-btn:hover {
+    background-color: #555;
+  }
+  
+  /* Error messages */
+  .invalid-feedback {
+    color: red;
+    font-size: 0.9em;
+  }
+  
+  /* Questions list heading */
+  h4 {
+    font-size: 1.5em;
+    color: #333;
+    margin-top: 40px;
+  }
+  

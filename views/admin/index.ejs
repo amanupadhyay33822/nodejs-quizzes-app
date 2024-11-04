@@ -1,0 +1,220 @@
+<section id="main-header">
+  <h1>Welcome To Dev Admin Quizzes</h1>
+  <p>
+    Boost your development skills! Click on the courses to start taking exciting
+    quizzes and challenge yourself today.
+  </p>
+</section>
+
+<div class="container">
+  <div class="add-ques row">
+    <div class="col-8 offset-2">
+      <form id="addQuestionForm" action="/add/qs" method="POST" novalidate>
+        <h3>Add Question</h3>
+        
+        <!-- Question Text -->
+        <div class="mb-3">
+          <label for="questionText" class="form-label">Question:</label>
+          <textarea
+            id="questionText"
+            name="question[text]"
+            class="form-control"
+            cols="30"
+            rows="4"
+            required
+          ></textarea>
+        </div>
+
+        <!-- Question Type -->
+        <div class="mb-3">
+          <label for="questionType" class="form-label">Type of Question</label>
+          <select
+            id="questionType"
+            name="question[type]"
+            class="form-select"
+            required
+            onchange="toggleAnswerFields()"
+          >
+            <option selected disabled>Type of Question</option>
+            <option value="1">Multiple Choice</option>
+            <option value="2">True/False</option>
+            <option value="3">Descriptive</option>
+          </select>
+        </div>
+
+        <!-- Answer Section -->
+        <div class="answer">
+          <h4>Answer</h4>
+
+          <!-- Multiple Choice Answer -->
+          <div class="mcq" style="display: none;">
+            <div class="mb-3">
+              <label for="correctAnswer" class="form-label">Correct Answer</label>
+              <input
+                id="correctAnswer"
+                name="question[mcq]"
+                class="form-control"
+                placeholder="Enter correct answer"
+              />
+            </div>
+
+            <div class="option-list">
+              <!-- Initial Option Field -->
+              <div class="mb-3">
+                <label class="form-label">Option 1</label>
+                <input
+                  name="question[options][]"
+                  class="form-control"
+                  placeholder="Enter option"
+                />
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-light add-option" onclick="addOption()">
+              Add option
+            </button>
+          </div>
+
+          <!-- True/False Answer -->
+          <div class="true-false" style="display: none;">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="question[trueFalseAnswer]"
+                id="true"
+                value="True"
+              />
+              <label class="form-check-label" for="true">True</label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="question[trueFalseAnswer]"
+                id="false"
+                value="False"
+              />
+              <label class="form-check-label" for="false">False</label>
+            </div>
+          </div>
+
+          <!-- Descriptive Answer -->
+          <div class="descriptive" style="display: none;">
+            <div class="mb-3">
+              <textarea
+                name="question[descriptive]"
+                class="form-control"
+                cols="30"
+                rows="4"
+                placeholder="Write your answer here"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <br />
+        <button type="submit" class="btn btn-dark">Add question</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleAnswerFields() {
+    const questionType = document.getElementById("questionType").value;
+    const mcqSection = document.querySelector(".mcq");
+    const trueFalseSection = document.querySelector(".true-false");
+    const descriptiveSection = document.querySelector(".descriptive");
+
+    mcqSection.style.display = "none";
+    trueFalseSection.style.display = "none";
+    descriptiveSection.style.display = "none";
+
+    if (questionType === "1") {
+      mcqSection.style.display = "block";
+    } else if (questionType === "2") {
+      trueFalseSection.style.display = "block";
+    } else if (questionType === "3") {
+      descriptiveSection.style.display = "block";
+    }
+  }
+
+  function addOption() {
+    const optionList = document.querySelector(".option-list");
+    const optionCount = optionList.querySelectorAll(".mb-3").length;
+
+    if (optionCount < 4) {
+      const newOption = document.createElement("div");
+      newOption.className = "mb-3";
+      newOption.innerHTML = `
+        <label class="form-label">Option ${optionCount + 1}</label>
+        <input
+          name="question[options][]"
+          class="form-control"
+          placeholder="Enter option"
+        />
+      `;
+      optionList.appendChild(newOption);
+    } else {
+      alert("You can add a maximum of 4 options only.");
+    }
+  }
+
+  document.getElementById("addQuestionForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    
+    // Basic validation checks
+    const questionText = document.getElementById("questionText").value.trim();
+    const questionType = document.getElementById("questionType").value;
+    console.log(questionText)
+    if (!questionText) {
+      alert("Please enter a question.");
+      return;
+    }
+
+    if (!questionType) {
+      alert("Please select a question type.");
+      return;
+    }
+
+    if (questionType === "1") {
+      const correctAnswer = document.getElementById("correctAnswer").value.trim();
+      const options = document.querySelectorAll('input[name="question[options][]"]');
+      
+      if (!correctAnswer) {
+        alert("Please enter the correct answer for the multiple-choice question.");
+        return;
+      }
+      
+      let allOptionsFilled = true;
+      options.forEach(option => {
+        if (!option.value.trim()) {
+          allOptionsFilled = false;
+        }
+      });
+      
+      if (!allOptionsFilled) {
+        alert("Please fill in all multiple-choice options.");
+        return;
+      }
+    }
+
+    if (questionType === "2") {
+      const trueFalseAnswer = document.querySelector('input[name="question[trueFalseAnswer]"]:checked');
+      if (!trueFalseAnswer) {
+        alert("Please select True or False as the answer.");
+        return;
+      }
+    }
+
+    // Submit the form if all validations pass
+    event.target.submit();
+  });
+</script>
+
+<%- contentFor('styles') %>
+<link rel="stylesheet" href="/stylesheets/admin/index.css" />
+
+<%- contentFor('title') %>
+<title>Admin</title>

@@ -34,7 +34,7 @@ module.exports = {
     // CRUD
     create: (req, res, next) => {
         const { body } = req;
-            const newUser = new User({ username: body.username, email: body.email });
+            const newUser = new User({ username: body.username, email: body.email,password: body.password });
             User.register(newUser, body.password, (error, user) => {
                 if (user) {
                     req.flash("success", `${user.username}'s account created successfully!`);

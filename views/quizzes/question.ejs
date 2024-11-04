@@ -1,53 +1,70 @@
 <section id="question-container">
-    <script>
-        var questionGraded = false;
-    </script>
-    <div id="question-wrapper">
-        <h2>Question <%= questionIndex + 1 %> of <%= quiz.questions.length %></h2>
-        <% if (flashMessages) { %>
-            <% if (flashMessages.correct) { %>
-                <div id="correct-answer" class="answer">
-                    <img src="/icons/quizzes/check.png" alt="" srcset="" width="20"><p><%= flashMessages.correct %></p>
-                </div>
-            <%} else if(flashMessages.incorrect) {%>
-            <div id="incorrect-answer" class="answer">
-                <img src="/icons/quizzes/cross.png" alt="" srcset="" width="20"><p><%= flashMessages.incorrect %></p>
-            </div>    
-            <%}%>
-        <%}%>
-        
-        <form action="<%= `/quizzes/${quiz._id}/question/${questionIndex}/grade` %>" method="POST">
-            <h4><%= question.statement %></h4>
-            <input type="hidden" name="answers" value="">
-            <% question.options.forEach((option, index) => { %>
-                <div class="option">
-                    <input type="radio" name="userAnswer" id="<%= index %>" value="<%= option %>" required>
-                    <label for="<%=index%>"><%= option %></label>
-                </div>
-            <%});%>
-            <div id="button-wrapper">
-                <% if (flashMessages.graded) { %>
-                    <script>
-                        var questionGraded = true;
-                    </script>
-                    <% const nextQuestion = questionIndex + 1; %>
-                    <% if (nextQuestion == quiz.questions.length) { %>
-                        <a class="btn" href="<%= `/quizzes/results` %>">Next</a>    
-                    <%} else {%>
-                        <a class="btn" href="<%= `/quizzes/${quiz._id}/question/${nextQuestion}` %>">Next question</a>
-                    <%}%>                
-                <%} else { %>
-                    <input type="submit" value="Submit" id="gradeBtn" class="btn" disabled>
-                <%}%>  
-            </div>
-        </form>
+  <script>
+    var questionGraded = false;
+  </script>
+  <div id="question-wrapper">
+    <h2>Question <%= questionIndex + 1 %> of <%= quiz.questions.length %></h2>
+    <% if (flashMessages) { %> <% if (flashMessages.correct) { %>
+    <div id="correct-answer" class="answer">
+      <img src="/icons/quizzes/check.png" alt="" srcset="" width="20" />
+      <p><%= flashMessages.correct %></p>
     </div>
+    <%} else if(flashMessages.incorrect) {%>
+    <div id="incorrect-answer" class="answer">
+      <img src="/icons/quizzes/cross.png" alt="" srcset="" width="20" />
+      <p><%= flashMessages.incorrect %></p>
+    </div>
+    <%}%> <%}%>
+
+    <form
+      action="<%= `/quizzes/${quiz._id}/question/${questionIndex}/grade` %>"
+      method="POST"
+    >
+      <h4><%= question.statement %></h4>
+      <input type="hidden" name="answers" value="" />
+      <% question.options.forEach((option, index) => { %>
+      <div class="option">
+        <input
+          type="radio"
+          name="userAnswer"
+          id="<%= index %>"
+          value="<%= option %>"
+          required
+        />
+        <label for="<%=index%>"><%= option %></label>
+      </div>
+      <%});%>
+      <div id="button-wrapper">
+        <% if (flashMessages.graded) { %>
+        <script>
+          var questionGraded = true;
+        </script>
+        <% const nextQuestion = questionIndex + 1; %> <% if (nextQuestion ==
+        quiz.questions.length) { %>
+        <a class="btn" href="<%= `/quizzes/results` %>">Next</a>
+        <%} else {%>
+        <a
+          class="btn"
+          href="<%= `/quizzes/${quiz._id}/question/${nextQuestion}` %>"
+          >Next question</a
+        >
+        <%}%> <%} else { %>
+        <input
+          type="submit"
+          value="Submit"
+          id="gradeBtn"
+          class="btn"
+          disabled
+        />
+        <%}%>
+      </div>
+    </form>
+  </div>
 </section>
 
 <script src="/javascripts/quizzes/question.js"></script>
 
 <%- contentFor('styles') %>
-<link rel="stylesheet" href="/stylesheets/quizzes/question.css">
+<link rel="stylesheet" href="/stylesheets/quizzes/question.css" />
 
-<%- contentFor('title') %>
-<%= quiz.title %>
+<%- contentFor('title') %> <%= quiz.title %>
